@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}GNITS{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-gradient-to-br from-purple-100 via-pink-200 to-fuchsia-100 text-gray-900 font-sans">
+
+  <!-- Navbar -->
+  <nav class="backdrop-blur-sm bg-white/60 border-b border-purple-200 shadow-md sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-3xl font-bold text-pink-600 tracking-wider hover:scale-105 transition">GNITS</h1>
+      <ul class="flex gap-8 font-medium text-gray-700">
+        <li><a href="{{ url_for('home') }}" class="hover:text-pink-600 hover:underline">Home</a></li>
+        <li><a href="{{ url_for('about') }}" class="hover:text-pink-600 hover:underline">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  {% block content %}{% endblock %}
+  <div class="chatbot-btn" onclick="toggleChatbot()">
+    <i>&#128172;</i> <!-- Chat bubble icon -->
+  </div>
+
+  <!-- Chatbot iframe -->
+  <iframe id="chatbot-container"
+          src="https://widget.kommunicate.io/chat?appId=21002058591bbb6e4b4c1c124ad9fead7"
+          allow="microphone; geolocation;">
+  </iframe>
+
+  <script>
+    // Function to toggle chatbot visibility
+    function toggleChatbot() {
+      var chatbot = document.getElementById("chatbot-container");
+      if (chatbot.style.display === "none" || chatbot.style.display === "") {
+        chatbot.style.display = "block"; // Show the chatbot
+      } else {
+        chatbot.style.display = "none"; // Hide the chatbot
+      }
+    }
+  </script>
+
+  <style>
+    /* Floating Icon for Chatbot (Bottom-Right) */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px; /* Aligning button to the bottom-right */
+      width: 60px;
+      height: 60px;
+      background-color: #25d366;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+    .chatbot-btn:hover {
+      transform: scale(1.1);
+    }
+    .chatbot-btn i {
+      color: white;
+      font-size: 30px;
+    }
+
+    /* Chatbot iframe container */
+    #chatbot-container {
+      position: fixed;
+      bottom: 90px;
+      right: 20px; /* Aligning chatbot to the bottom-right */
+      width: 400px;
+      height: 600px;
+      display: none;  /* Hidden by default */
+      border: none;
+      z-index: 999;
+    }
+  </style>
+</body>
+</html>
